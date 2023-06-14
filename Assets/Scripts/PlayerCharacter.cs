@@ -11,6 +11,46 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private double attack = 10;
     [SerializeField] private string currentLocation = "Starting Fountain";
 
+    // Start is called before the first frame update
+    void Start()
+    {        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                return;
+            }
+
+            var key = Direction.None;
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                key = Direction.Forward;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                key = Direction.Back;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                key = Direction.Left;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                key = Direction.Right;
+            }
+
+            if (key != Direction.None)
+            {
+                return;
+            }
+        }
+    }
+
     public void TakeDamage(int damageTaken)
     {
         health -= damageTaken;

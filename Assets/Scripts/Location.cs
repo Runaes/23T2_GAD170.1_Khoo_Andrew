@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Location :MonoBehaviour
+public class Location : MonoBehaviour
 {
     [SerializeField] private Enemy enemy;
     [SerializeField] private Dictionary<Direction, string> validExits;
     Func<Enemy> onEnterAction;
 
-    public Location(Dictionary<Direction,string> validExits, Func<Enemy> onEnterAction)
+    public Location(Dictionary<Direction,string> validExits, Func<Enemy, PlayerCharacter> onEnterAction)
     {
         this.validExits = validExits;
         this.onEnterAction = onEnterAction;
     }
 
-    public void EnterLocation()
+    public void EnterLocation(PlayerCharacter player)
     {
         if (enemy == null)
         {
-            enemy = onEnterAction?.Invoke();
+            enemy = onEnterAction?.Invoke(player);
         }
     }
 

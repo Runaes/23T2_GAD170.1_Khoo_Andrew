@@ -5,9 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int health;
-    [SerializeField] private int level;
     [SerializeField] private int expValue;
     [SerializeField] private int damage;
+
+    public Enemy(int health, int expValue, int damage)
+    {
+        this.health = health;
+        this.level = level;
+        this.expValue = expValue;
+        this.damage = damage;
+    }
 
     public void TakeDamage(PlayerCharacter player)
     {

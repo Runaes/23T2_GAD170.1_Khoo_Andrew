@@ -89,8 +89,22 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    private void SetHealthToFull()
+    public void SetHealthToFull()
     {
         health = level * 150 - 50;
     }
+
+    public bool ApplyHiddenCheck(bool hidden)
+    {
+        if (hidden)
+        {
+            bumpCount++;
+        }
+        else
+        {  
+            bumpCount = 0;
+        }
+        return bumpCount > 9;
+    }
+    int bumpCount = 0;
 }

@@ -9,11 +9,11 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private int exp = 0;
     [SerializeField] private int health = 100;
     [SerializeField] private double attack = 10;
+    [SerializeField] private string currentLocation = "Starting Fountain";
 
     // Start is called before the first frame update
     void Start()
     {        
-        LocationManager.MoveDirectlyToLocation("Starting Fountain", this);
     }
 
     // Update is called once per frame
@@ -23,7 +23,6 @@ public class PlayerCharacter : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                LocationManager.Fight(this);
                 return;
             }
 
@@ -49,14 +48,13 @@ public class PlayerCharacter : MonoBehaviour
             {
                 return;
             }
-            LocationManager.MoveToNewLocation(key, this);
         }
     }
 
-    public bool TakeDamage(int damageTaken)
+    public void TakeDamage(int damageTaken)
     {
         health -= damageTaken;
-        return AdjustStats();
+        AdjustStats();
     }
 
     public int DoDamage()
@@ -70,7 +68,7 @@ public class PlayerCharacter : MonoBehaviour
         AdjustStats();
     }
 
-    public bool AdjustStats()
+    public void AdjustStats()
     {
         var expRequiredForlevelUp =  (level * 75) + 25;
         if (exp == expRequiredForlevelUp)
@@ -79,19 +77,16 @@ public class PlayerCharacter : MonoBehaviour
             level++;
             SetHealthToFull();
             attack *= 1.2525;
-            TextManager.NewLine($"Woo Hoo! level UP! You are now level {level}");
+            Debug.Log($"Woo Hoo! level UP! You are now level {level}");
         }
 
         if (health <= 0)
         {
             var newexpValue = Math.Max(0, exp -= (level * 25));
             var oldexpValue = exp;
-            TextManager.NewLine($"You pass out and find yourself back at the starting fountain, {(newexpValue == oldexpValue ? "but you have no exp left to Lose! You sly dog!" : $"and you lost {oldexpValue - newexpValue} exp!")}");
-            LocationManager.MoveDirectlyToLocation("Starting Fountain", this);
-            return true;
+            Debug.Log($"You pass out and find yourself back at the starting fountain, {(newexpValue == oldexpValue ? "but you have no exp left to Lose! You sly dog!" : $"and you lost {oldexpValue - newexpValue} exp!")}");
+            currentLocation = "Starting Fountain";
         }
-
-        return false;
     }
 
     public void SetHealthToFull()
@@ -99,22 +94,17 @@ public class PlayerCharacter : MonoBehaviour
         health = level * 150 - 50;
     }
 
-    public void BumpIntoWall(bool reset)
+    public bool ApplyHiddenCheck(bool hidden)
     {
-        if (!reset)
+        if (hidden)
         {
-            BumpCount++;
+            bumpCount++;
         }
         else
         {  
-            BumpCount = 0;
+            bumpCount = 0;
         }
-        if (BumpCount > 19)
-        {
-            GoldenSlime = true;
-        }
+        return bumpCount > 9;
     }
-
-    public int BumpCount { get; private set; } = 0;
-    public bool GoldenSlime { get; set; }
+    int bumpCount = 0;
 }

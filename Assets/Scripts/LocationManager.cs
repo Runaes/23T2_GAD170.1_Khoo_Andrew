@@ -36,25 +36,28 @@ public static class LocationManager
 
     static void CreateLocations()
     {
-        var startingLocation = new Location(
-                new Dictionary<Direction, string> { { Direction.Forward, "First Room" } },
-                new Func<PlayerCharacter, Enemy>(player =>
-                {
-                    TextManager.NewLine("You find yourself in the Starting Fountain. There is an obvious exit in front of you.");
-                    player.SetHealthToFull();
-                    TextManager.NewLine("You drink from the fountain and heal to full.");
-                    return null;
-                })
-                        );
-
-
+        // this sets up the rooms and monmster spawns
         locations = new Dictionary<string, Location>
         {
             {
                 "Starting Fountain",
-                startingLocation
+                new Location(
+                new Dictionary<Direction, string> { { Direction.Forward, "First Room" } },
+                new Func<PlayerCharacter, Enemy>(player =>
+                            {
+                                TextManager.NewLine("You find yourself in the Starting Fountain. There is an obvious exit in front of you.");
+                                player.SetHealthToFull();
+                                TextManager.NewLine("You drink from the fountain and heal to full.");
+                                if (player.BumpCount > 10 || player.GoldenSlime)
+                                {
+                                    player.GoldenSlime = false;
+                                    TextManager.NewLine("Hey look, a golden slime has formed from the accumulation of your lost brain cells!");
+                                    return new Enemy(health: 1, expValue: 100, damage: 9001, kill: () => Kill("Starting Fountain"));
+                                }
+                                return null;
+                            })
+                        )
             },
-
             {
                 "First Room",
                 new Location(
@@ -65,12 +68,6 @@ public static class LocationManager
 @"You find yourself in the first room. There is an exit behind you leading back to the Starting Fountain,
 In front of you Leading to the Second Room,
 and to your left, leading into what seems to be an Easy Room.");
-                                if (player.BumpCount > 10 || player.GoldenSlime)
-                                {
-                                    player.GoldenSlime = false;
-                                    TextManager.NewLine("Hey look, a golden slime has formed from the accumulation of your lost brain cells!");
-                                    return new Enemy(health: 1, expValue: 100, damage: 9001, kill: () => Kill("First Room"));
-                                }
                                 return null;
                             })
                         )

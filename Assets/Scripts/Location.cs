@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Location : MonoBehaviour
+public class Location
 {
     [SerializeField] private Enemy enemy;
     [SerializeField] private Dictionary<Direction, string> validExits;

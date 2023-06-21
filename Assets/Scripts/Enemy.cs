@@ -52,6 +52,10 @@ public class Enemy
             TextManager.NewLine("You failed to escape!");
             DoDamage(player);
         }
+        else
+        {
+            TextManager.NewLine("You manage to run past your foe!");
+        }
         return success;
     }
 }

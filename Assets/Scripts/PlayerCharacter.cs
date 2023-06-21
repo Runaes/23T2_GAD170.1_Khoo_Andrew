@@ -121,7 +121,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         get
         {
-            return exp > ExpRequiredToLevelUp && level < 5;
+            return exp >= ExpRequiredToLevelUp && level < 5;
 
         }
     }

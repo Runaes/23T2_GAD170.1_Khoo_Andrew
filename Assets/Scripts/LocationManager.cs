@@ -16,7 +16,7 @@ public static class LocationManager
 
     public static void Fight(PlayerCharacter player)
     {
-
+        currentLocation.Fight(player);
     }
 
     public static void MoveDirectlyToLocation(string location, PlayerCharacter player)
@@ -40,7 +40,7 @@ public static class LocationManager
                 new Dictionary<Direction, string> { { Direction.Forward, "First Room" } },
                 new Func<PlayerCharacter, Enemy>(player =>
                 {
-                    TextManager.NewLine("You find yourself in the Starting Fountin. There is an obvious exit in front of you.");
+                    TextManager.NewLine("You find yourself in the Starting Fountain. There is an obvious exit in front of you.");
                     player.SetHealthToFull();
                     TextManager.NewLine("You drink from the fountain and heal to full.");
                     return null;
@@ -125,7 +125,7 @@ And a portal in front that seems to lead straight into hell.");
                 new Func<PlayerCharacter, Enemy>(player =>
                 {
                     TextManager.NewLine("You find yourself in the Hard room. There is an exit to your left going back to the second room and a portal to your right that seems to loop back here.");
-                    return new Enemy(health: 200, expValue: 100, damage: 100, kill: () => Kill("Hard Room"));
+                    return new Enemy(health: 120, expValue: 100, damage: 80, kill: () => Kill("Hard Room"));
 
                 }))
             },

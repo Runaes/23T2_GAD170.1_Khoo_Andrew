@@ -19,16 +19,29 @@ public class Location : MonoBehaviour
     {
         LocationManager.currentLocation = this;
         var newEnemy = onEnterAction?.Invoke(player);
-        enemy = enemy ?? newEnemy;
+        if (enemy == null)
+        {
+            enemy = newEnemy;
+        }
+        else
+        {
+            TextManager.NewLine($"The foe is still here! it has {enemy.health} hp left!");
+        }
     }
 
     public void KillEnemy()
     {
+        TextManager.NewLine($"Woo! You killed it! and gained {enemy.expValue} exp!");
         enemy = null;
     }
 
     public void Fight(PlayerCharacter player)
     {
+        if (enemy == null)
+        {
+            TextManager.NewLine("SCHWING AND A MISS!");
+            return;
+        }
         enemy.TakeDamage(player);
     }
 

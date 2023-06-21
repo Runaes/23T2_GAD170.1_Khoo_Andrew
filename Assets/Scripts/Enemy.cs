@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy
 {
-    [SerializeField] private int health;
-    [SerializeField] private int expValue;
+    [SerializeField] public int health;
+    [SerializeField] public int expValue;
     [SerializeField] private int damage;
     Action kill;
 
     public Enemy(int health, int expValue, int damage, Action kill)
     {
+        TextManager.NewLine($"A new Enemey Appears! It looks like it does {damage} damage and is worth about {expValue}!");
         this.health = health;
         this.expValue = expValue;
         this.damage = damage;
@@ -37,8 +36,22 @@ public class Enemy : MonoBehaviour
         player.TakeDamage(damage);
     }
 
+    Unity.Mathematics.Random rand = new Unity.Mathematics.Random();
+    bool first = true;
     public bool AttemptEscape(PlayerCharacter player)
     {
-        return false;
+        if (first)
+        {
+            first = false;
+            rand.InitState();
+        }
+
+        var success = rand.NextInt(100) > 50;
+        if (!success)
+        {
+            TextManager.NewLine("You failed to escape!");
+            DoDamage(player);
+        }
+        return success;
     }
 }

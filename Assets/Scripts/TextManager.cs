@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,11 +18,15 @@ public class TextManager : MonoBehaviour
 
     void Update()
     {
-        myText.text = text.ToString();
+        myText.text = text?.ToString();
     }
 
     public static void NewLine(string line)
     {
+        if (text?.Count(c => c == '\r') > 10)
+        {
+            ResetLines();
+        }
         text = text + "\r\n" + line;
     }
 

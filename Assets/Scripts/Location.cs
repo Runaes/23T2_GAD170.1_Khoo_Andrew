@@ -74,6 +74,8 @@ public class Location : MonoBehaviour
                     TextManager.NewLine("The brain cells start combining together moving towards the fountain!");
                     player.goldenSlime = true;
                 }
+                TextManager.NewLine("\r\n\r\n");
+                EnterLocation(player);
             }
             else
             {

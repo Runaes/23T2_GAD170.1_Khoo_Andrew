@@ -33,6 +33,10 @@ public class PlayerCharacter : MonoBehaviour
             }
             if (level < 5)
             {
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    LevelUp();
+                }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     LocationManager.Fight(this);
@@ -94,17 +98,10 @@ public class PlayerCharacter : MonoBehaviour
 
     public bool AdjustStats()
     {
-        var expRequiredForlevelUp =  (level * 75) + 25;
-        while (exp > expRequiredForlevelUp && level < 5)
+        if (CanLevelUp)
         {
-            exp -= expRequiredForlevelUp;
-            level++;
-            SetHealthToFull();
-            attack *= 1.7525;
-            TextManager.NewLine($"Woo Hoo! level UP! You are now level {level}");
-            expRequiredForlevelUp = (level * 75) + 25;
+            TextManager.NewLine("You have enough Exp to level up. Press L to LevelUp!");
         }
-
         if (health <= 0)
         {
             var oldexpValue = exp;
@@ -116,6 +113,40 @@ public class PlayerCharacter : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool CanLevelUp
+    {
+        get
+        {
+            return exp > ExpRequiredToLevelUp && level < 5;
+
+        }
+    }
+
+    private int ExpRequiredToLevelUp
+    {
+        get
+        {
+            return (level * 75) + 25;
+        }
+    }
+
+    private void LevelUp()
+    {
+        if (CanLevelUp)
+        {
+            exp -= ExpRequiredToLevelUp;
+            level++;
+            SetHealthToFull();
+            attack *= 1.7525;
+            TextManager.NewLine($"Woo Hoo! level UP! You are now level {level}");
+            AdjustStats();
+        }
+        else
+        {
+            TextManager.NewLine($"You try to level up but just aren't experienced enough. You need {ExpRequiredToLevelUp - exp} more exp.");
+        }
     }
 
     public void SetHealthToFull()

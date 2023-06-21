@@ -29,8 +29,9 @@ public static class LocationManager
         locations[location].EnterLocation(player);
     }
 
-    public static void Kill(string location)
+    public static void Kill(string location, string monster)
     {
+        TextManager.NewLine($"The {monster} dies!");
         locations[location].KillEnemy();
     }
 
@@ -52,7 +53,7 @@ public static class LocationManager
                                 {
                                     player.goldenSlime = false;
                                     TextManager.NewLine("Hey look, a golden slime has formed from the accumulation of your lost brain cells!");
-                                    return new Enemy("Blob of lost brain cells.", health: 1, expValue: 100, damage: 9001, kill: () => Kill("Starting Fountain"));
+                                    return new Enemy("Blob of lost brain cells.", health: 1, expValue: 100, damage: 9001, kill: () => Kill("Starting Fountain", "Blob of lost brain cells"));
                                 }
                                 return null;
                             })
@@ -81,7 +82,7 @@ and to your left, leading into what seems to be an Easy Room.");
                 new Func<PlayerCharacter, Enemy>(player =>
                 {
                     TextManager.NewLine("You find yourself in the Easy room. There is an exit to your right going back to the first room and a portal to your left that seems to loop back here.");
-                    return new Enemy("Baby Slime", health: 15, expValue: 10, damage: 5, kill: () => Kill("Esey Room"));
+                    return new Enemy("Baby Slime", health: 15, expValue: 10, damage: 5, kill: () => Kill("Esey Room", "Baby Slime"));
                 })
                         )
             },
@@ -110,7 +111,7 @@ And a portal in front that seems to lead straight into hell.");
                 new Func<PlayerCharacter, Enemy>(player =>
                 {
                     TextManager.NewLine("You find yourself in the Medium room. There is an exit to your right going back to the second room and a portal to your left that seems to loop back here.");
-                    return new Enemy("Mean goblin", health: 80, expValue: 50, damage: 40, kill: () => Kill("Medium Room"));
+                    return new Enemy("Mean goblin", health: 80, expValue: 50, damage: 40, kill: () => Kill("Medium Room", "Mean goblin"));
                 })
                     )
             },
@@ -122,7 +123,7 @@ And a portal in front that seems to lead straight into hell.");
                 new Func<PlayerCharacter, Enemy>(player =>
                 {
                     TextManager.NewLine("You find yourself in the Hard room. There is an exit to your left going back to the second room and a portal to your right that seems to loop back here.");
-                    return new Enemy("Large Golem", health: 120, expValue: 100, damage: 80, kill: () => Kill("Hard Room"));
+                    return new Enemy("Large Golem", health: 120, expValue: 100, damage: 80, kill: () => Kill("Hard Room", "Large Golem"));
 
                 }))
             },
@@ -138,14 +139,14 @@ And a portal in front that seems to lead straight into hell.");
                         TextManager.NewLine(
 @"You've found your way into Hell, Face to face with the final boss.
 Forchoonatelee you've lost so many brin sells that you don't even not ice that you shud be burning alive here!");
-                        return new Enemy("Esey Last Baws MonSTAR!", health: 1, expValue: 5000000, damage: 0, kill: null); // there is no need to clear the enemy. Player will win if they defeat a boss
+                        return new Enemy("Esey Last Baws MonSTAR!", health: 1, expValue: 5000000, damage: 0, kill: () => Kill("Hell", "Delusion from lack of Oxygen.")); // there is no need to clear the enemy. Player will win if they defeat a boss
                     }
 
                     TextManager.NewLine("You fall though the portal deep into hell. It's hot here and the heat burns your skin!");
                     if (!player.TakeDamage(399))
                     {
                         TextManager.NewLine("You grimace from the burning heat and see before you the final boss!");
-                        return new Enemy("Nasty Dragon", health: 400, expValue: 5000000, damage: 50, kill: null); // there is no need to clear the enemy. Player will win if they defeat a boss
+                        return new Enemy("Nasty Dragon", health: 400, expValue: 5000000, damage: 50, kill: () => Kill("Hell", "Nasty Dragon")); // there is no need to clear the enemy. Player will win if they defeat a boss
                     }
                     return null;
                 })

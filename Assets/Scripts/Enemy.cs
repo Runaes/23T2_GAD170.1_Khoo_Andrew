@@ -8,9 +8,9 @@ public class Enemy
     [SerializeField] private int damage;
     Action kill;
 
-    public Enemy(int health, int expValue, int damage, Action kill)
+    public Enemy(string name, int health, int expValue, int damage, Action kill)
     {
-        TextManager.NewLine($"A new Enemey Appears! It looks like it does {damage} damage and is worth about {expValue}!");
+        TextManager.NewLine($"A {name} appears! It looks like it does {damage} damage and is worth about {expValue}!");
         this.health = health;
         this.expValue = expValue;
         this.damage = damage;

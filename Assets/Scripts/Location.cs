@@ -57,22 +57,22 @@ public class Location : MonoBehaviour
             if (!validExits.TryGetValue(direction, out var location))
             {
                 player.BumpIntoWall(false);
-                if (player.BumpCount < 2)
+                if (player.bumpCount < 2)
                 {
                     TextManager.NewLine("You bump into a wall!");
                 }
-                else if (player.BumpCount < 6)
+                else if (player.bumpCount < 6)
                 {
                     TextManager.NewLine("The wall has not budged, but a few of your brain cells have fallen out.");
                 }
-                else if (player.BumpCount < 20)
+                else if (player.bumpCount < 20)
                 {
                     TextManager.NewLine("And there goes another braincell......");
                 }
                 else
                 {
                     TextManager.NewLine("The brain cells start combining together moving towards the fountain!");
-                    player.GoldenSlime = true;
+                    player.goldenSlime = true;
                 }
             }
             else

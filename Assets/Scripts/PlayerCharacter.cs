@@ -17,6 +17,7 @@ public class PlayerCharacter : MonoBehaviour
         exp = 0;
         health = 100;
         attack = 10;
+        goldenSlime = false;
         TextManager.NewLine("Welcome to the Game! Please use arrow keys to move and the spacebar to attack! Or restart the Game using the F5 key\r\n\r\n");
         LocationManager.MoveDirectlyToLocation("Starting Fountain", this);
     }
@@ -126,18 +127,18 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (!reset)
         {
-            BumpCount++;
+            bumpCount++;
         }
         else
         {  
-            BumpCount = 0;
+            bumpCount = 0;
         }
-        if (BumpCount > 19)
+        if (bumpCount > 19)
         {
-            GoldenSlime = true;
+            goldenSlime = true;
         }
     }
 
-    public int BumpCount { get; private set; } = 0;
-    public bool GoldenSlime { get; set; }
+    public int bumpCount { get; private set; } = 0;
+    public bool goldenSlime { get; set; }
 }

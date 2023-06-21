@@ -29,6 +29,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F5))
             {
+                // restart game.
                 Start();
             }
             if (level < 5)
@@ -63,6 +64,7 @@ public class PlayerCharacter : MonoBehaviour
 
                 if (key == Direction.None)
                 {
+                    // we should do nothing if anyother key is pressed.
                     return;
                 }
                 TextManager.ResetLines();
@@ -72,7 +74,7 @@ public class PlayerCharacter : MonoBehaviour
         if (level == 5)
         {
             TextManager.NewLine("WooHoo You win!");
-            level++;
+            level++; // set level to 6 so no other commands are read except for restart.
         }
     }
 
